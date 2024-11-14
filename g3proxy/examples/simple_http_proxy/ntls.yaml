@@ -12,7 +12,9 @@ server:
   - name: rtsp
     type: tcp_stream
     escaper: default
-    upstream: 10.10.30.188:554
+    upstream: 10.10.30.188:332
+    tls_client:
+      insecure: true
     listen: "[::]:10332"
   - name: real_http
     type: http_rproxy
