@@ -10,15 +10,10 @@ controller:
 
 server:
   - name: rtsp
-    type: http_rproxy
+    type: tcp_stream
     escaper: default
-    listen:
-      address: "[::]:10087"
-    hosts:
-      - exact_match: 172.31.247.9  # Match this domain
-        set_default: true
-        upstream: 10.10.30.188:80            # Path/all forwarding
-    # ... Other configurations
+    upstream: 10.10.30.188:332
+    listen: "[::]:10332"
   - name: real_http
     type: http_rproxy
     escaper: default
@@ -59,13 +54,14 @@ server:
       cert_pairs:
         certificate: cert.pem
         private_key: key.pem
-      tlcp_cert_pairs: # Enable Guomi TLCP protocol
-        sign_certificate: server_sign.crt
-        sign_private_key: server_sign.key
-        enc_certificate:  server_enc.crt
-        enc_private_key:  server_enc.key
-      enable_client_auth: true # Optional, enable mTLS
-    server: real_http
+#      tlcp_cert_pairs: # Enable Guomi TLCP protocol
+#        sign_certificate: server_sign.crt
+#        sign_private_key: server_sign.key
+#        enc_certificate:  server_enc.crt
+#        enc_private_key:  server_enc.key
+      enable_client_auth: false # Optional, enable mTLS
+    server: rtsp
+    proxy_protocol: 2
 resolver:
   - name: default
     type: c-ares
