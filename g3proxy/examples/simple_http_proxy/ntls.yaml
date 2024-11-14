@@ -14,7 +14,7 @@ server:
     escaper: default
     upstream: 10.10.30.188:332
     tls_client:
-      insecure: true
+      insecure: true # Tls Insecure Mode: Tls Peer (server) cert vertification is no longer enforced for this Context!
     listen: "[::]:10332"
   - name: real_http
     type: http_rproxy
