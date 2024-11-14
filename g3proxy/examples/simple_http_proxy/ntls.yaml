@@ -12,7 +12,7 @@ server:
   - name: rtsp
     type: tcp_stream
     escaper: default
-    upstream: 10.10.30.188:332
+    upstream: 10.10.30.188:554
     listen: "[::]:10332"
   - name: real_http
     type: http_rproxy
@@ -61,7 +61,6 @@ server:
 #        enc_private_key:  server_enc.key
       enable_client_auth: false # Optional, enable mTLS
     server: rtsp
-    proxy_protocol: 2
 resolver:
   - name: default
     type: c-ares
