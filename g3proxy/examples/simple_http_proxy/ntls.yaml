@@ -1,0 +1,85 @@
+runtime:
+  thread_number: 2
+
+log: stdout
+
+controller:
+  local:
+    recv_timeout: 30
+    send_timeout: 1
+
+server:
+  - name: rtsp
+    type: http_rproxy
+    escaper: default
+    listen:
+      address: "[::]:10087"
+    hosts:
+      - exact_match: 172.31.247.9  # Match this domain
+        set_default: true
+        upstream: 10.10.30.188:80            # Path/all forwarding
+    # ... Other configurations
+  - name: real_http
+    type: http_rproxy
+    escaper: default
+    listen:
+      address: "[::]:10087"
+    hosts:
+      - exact_match: 172.31.247.9  # Match this domain
+        set_default: true
+        upstream: 10.10.30.188:80            # Path/all forwarding
+    # ... Other configurations
+  - name: tlcp1
+    type: native_tls_port
+    listen: "[::]:10088"
+    tls_server:
+      cert_pairs:
+        certificate: self_signed.crt
+        private_key: private.key
+      tlcp_cert_pairs: # Enable Guomi TLCP protocol
+        sign_certificate: server_sign.crt
+        sign_private_key: server_sign.key
+        enc_certificate: server_enc.crt
+        enc_private_key:  server_enc.key
+      enable_client_auth: true # Optional, enable mTLS
+    server: real_http
+  - name: tlcp
+    type: native_tls_port
+    listen: "[::]:10086"
+    tls_server:
+      #      cert_pairs:
+      #        certificate: /opt/config/cert.pem
+      #        private_key: /opt/config/key.pem
+      #      tlcp_cert_pairs: # Enable Guomi TLCP protocol
+      #        sign_certificate: /opt/config/server_sign.crt
+      #        sign_private_key: /opt/config/server_sign.key
+      #        enc_certificate:  /opt/config/server_enc.crt
+      #        enc_private_key:  /opt/config/server_enc.key
+      #      enable_client_auth: true # Optional, enable mTLS
+      cert_pairs:
+        certificate: cert.pem
+        private_key: key.pem
+      tlcp_cert_pairs: # Enable Guomi TLCP protocol
+        sign_certificate: server_sign.crt
+        sign_private_key: server_sign.key
+        enc_certificate:  server_enc.crt
+        enc_private_key:  server_enc.key
+      enable_client_auth: true # Optional, enable mTLS
+    server: real_http
+resolver:
+  - name: default
+    type: c-ares
+    server: 127.0.0.1
+
+escaper:
+  - name: default
+    type: direct_fixed
+    no_ipv6: true
+    resolver: default
+    resolve_strategy: IPv4Only
+    tcp_sock_speed_limit: 80M
+    udp_sock_speed_limit: 10M
+    egress_network_filter:
+      default: allow
+      allow:
+        - 127.0.0.1
