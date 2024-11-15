@@ -36,7 +36,7 @@ server:
         sign_certificate: server_sign.crt
         sign_private_key: server_sign.key
         enc_certificate: server_enc.crt
-        enc_private_key:  server_enc.key
+        enc_private_key: server_enc.key
       enable_client_auth: true # Optional, enable mTLS
     server: real_http
   - name: tlcp
@@ -49,8 +49,8 @@ server:
       tlcp_cert_pairs: # Enable Guomi TLCP protocol
         sign_certificate: server_sign.crt
         sign_private_key: server_sign.key
-        enc_certificate:  server_enc.crt
-        enc_private_key:  server_enc.key
+        enc_certificate: server_enc.crt
+        enc_private_key: server_enc.key
       enable_client_auth: true # Optional, enable mTLS
     server: rtsp
 resolver:
