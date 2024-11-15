@@ -9,6 +9,7 @@ controller:
     send_timeout: 1
 
 server:
+#LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -loglevel 64 -re -rtsp_transport tcp -i rtsp://172.31.247.9:10332/live/test  -c:v copy -f null -
   - name: rtsp
     type: tcp_stream
     escaper: default
