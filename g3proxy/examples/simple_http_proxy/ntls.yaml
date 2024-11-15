@@ -44,15 +44,6 @@ server:
     type: native_tls_port
     listen: "[::]:10086"
     tls_server:
-      #      cert_pairs:
-      #        certificate: /opt/config/cert.pem
-      #        private_key: /opt/config/key.pem
-      #      tlcp_cert_pairs: # Enable Guomi TLCP protocol
-      #        sign_certificate: /opt/config/server_sign.crt
-      #        sign_private_key: /opt/config/server_sign.key
-      #        enc_certificate:  /opt/config/server_enc.crt
-      #        enc_private_key:  /opt/config/server_enc.key
-      #      enable_client_auth: true # Optional, enable mTLS
       cert_pairs:
         certificate: cert.pem
         private_key: key.pem
