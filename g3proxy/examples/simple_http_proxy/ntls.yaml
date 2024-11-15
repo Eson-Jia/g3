@@ -25,7 +25,6 @@ server:
       - exact_match: 172.31.247.9  # Match this domain
         set_default: true
         upstream: 10.10.30.188:80            # Path/all forwarding
-    # ... Other configurations
   - name: tlcp1
     type: native_tls_port
     listen: "[::]:10088"
