@@ -16,7 +16,7 @@ server:
     tls_client:
       insecure: true # Tls Insecure Mode: Tls Peer (server) cert vertification is no longer enforced for this Context!
     listen: "[::]:10332"
-  - name: real_http
+  - name: http
     type: http_rproxy
     escaper: default
     listen:
@@ -38,7 +38,7 @@ server:
         enc_certificate: server_enc.crt
         enc_private_key: server_enc.key
       enable_client_auth: true # Optional, enable mTLS
-    server: real_http
+    server: http
 # LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -re -tlcp 1  -sign_cert ../curl/client_sign.crt \
 #  -sign_key ../curl/client_sign.key -enc_cert ../curl/client_enc.crt -enc_key ../curl/client_enc.key \
 #  -i https://172.31.247.9:10088/11-0-0.mp4  -c:v copy -f null -
