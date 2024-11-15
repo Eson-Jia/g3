@@ -41,6 +41,7 @@ server:
         enc_private_key: server_enc.key
       enable_client_auth: true # Optional, enable mTLS
     server: http
+#LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -tlcp 1 -sign_cert ../curl/client_sign.crt -sign_key ../curl/client_sign.key -enc_cert ../curl/client_enc.crt -enc_key ../curl/client_enc.key -i rtsps://172.31.247.9:10086/live/test -c:v copy -f null -
   - name: rtsps
     type: native_tls_port
     listen: "[::]:10086"
