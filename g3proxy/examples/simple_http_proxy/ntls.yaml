@@ -25,7 +25,7 @@ server:
       - exact_match: 172.31.247.9  # Match this domain
         set_default: true
         upstream: 10.10.30.188:80            # Path/all forwarding
-  - name: tlcp1
+  - name: https
     type: native_tls_port
     listen: "[::]:10088"
     tls_server:
@@ -39,7 +39,7 @@ server:
         enc_private_key: server_enc.key
       enable_client_auth: true # Optional, enable mTLS
     server: real_http
-  - name: tlcp
+  - name: rtsps
     type: native_tls_port
     listen: "[::]:10086"
     tls_server:
