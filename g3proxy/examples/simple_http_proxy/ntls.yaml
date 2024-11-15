@@ -26,9 +26,7 @@ server:
       - exact_match: 172.31.247.9  # Match this domain
         set_default: true
         upstream: 10.10.30.188:80            # Path/all forwarding
-# LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -re -tlcp 1  -sign_cert ../curl/client_sign.crt \
-#  -sign_key ../curl/client_sign.key -enc_cert ../curl/client_enc.crt -enc_key ../curl/client_enc.key \
-#  -i https://172.31.247.9:10088/11-0-0.mp4  -c:v copy -f null -
+#LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -re -tlcp 1 -sign_cert ../curl/client_sign.crt -sign_key ../curl/client_sign.key -enc_cert ../curl/client_enc.crt -enc_key ../curl/client_enc.key -i https://172.31.247.9:10088/11-0-0.mp4 -c:v copy -f null -
   - name: https
     type: native_tls_port
     listen: "[::]:10088"
