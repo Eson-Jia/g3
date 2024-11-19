@@ -32,7 +32,7 @@ server:
     listen: "[::]:10088"
     tls_server:
       cert_pairs:
-        certificate: self_signed.crt
+        certificate: certificate.crt
         private_key: private.key
       tlcp_cert_pairs: # Enable Guomi TLCP protocol
         sign_certificate: server_sign.crt
