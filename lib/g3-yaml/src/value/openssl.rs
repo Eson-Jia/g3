@@ -554,12 +554,10 @@ pub fn as_openssl_tls_server_config_builder(
                 }
                 Ok(())
             }
-            "enable_client_auth" => {
-                let enable =
-                    crate::value::as_bool(v).context(format!("invalid value for key {k}"))?;
-                if enable {
-                    builder.enable_client_auth();
-                }
+            "client_auth_level" => {
+                let auth_level =
+                    crate::value::as_i32(v).context(format!("invalid value for key {k}"))?;
+                builder.set_client_auth_level(auth_level);
                 Ok(())
             }
             "session_id_context" => {

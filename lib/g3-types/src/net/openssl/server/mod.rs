@@ -58,7 +58,7 @@ pub struct OpensslServerConfigBuilder {
     cert_pairs: Vec<OpensslCertificatePair>,
     #[cfg(feature = "tongsuo")]
     tlcp_cert_pairs: Vec<OpensslTlcpCertificatePair>,
-    client_auth: bool,
+    client_auth_level: i32,
     client_auth_certs: Vec<Vec<u8>>,
     session_id_context: String,
     no_session_ticket: bool,
@@ -72,7 +72,7 @@ impl OpensslServerConfigBuilder {
             cert_pairs: Vec::with_capacity(1),
             #[cfg(feature = "tongsuo")]
             tlcp_cert_pairs: Vec::with_capacity(1),
-            client_auth: false,
+            client_auth_level: 0,
             client_auth_certs: Vec::new(),
             session_id_context: String::new(),
             no_session_ticket: false,
@@ -99,8 +99,14 @@ impl OpensslServerConfigBuilder {
         Ok(())
     }
 
-    pub fn enable_client_auth(&mut self) {
-        self.client_auth = true;
+    pub fn set_client_auth_level(&mut self, level: i32) {
+        if level < 0 {
+            self.client_auth_level = 0;
+        } else if level > 2 {
+            self.client_auth_level = 2;
+        } else {
+            self.client_auth_level = level;
+        }
     }
 
     pub fn set_client_auth_certificates(&mut self, certs: Vec<X509>) -> anyhow::Result<()> {
@@ -260,9 +266,12 @@ impl OpensslServerConfigBuilder {
             set_ticket_key_callback(&mut ssl_builder, ticket_key_index)?;
         }
 
-        if self.client_auth {
-            ssl_builder.set_verify(SslVerifyMode::PEER | SslVerifyMode::FAIL_IF_NO_PEER_CERT);
-
+        if self.client_auth_level > 0 {
+            if self.client_auth_level > 1 {
+                ssl_builder.set_verify(SslVerifyMode::PEER | SslVerifyMode::FAIL_IF_NO_PEER_CERT);
+            } else {
+                ssl_builder.set_verify(SslVerifyMode::PEER);
+            }
             let mut store_builder = X509StoreBuilder::new()
                 .map_err(|e| anyhow!("failed to create ca cert store builder: {e}"))?;
             let mut subject_stack =

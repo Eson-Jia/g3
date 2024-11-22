@@ -39,7 +39,7 @@ server:
         sign_private_key: server_sign.key
         enc_certificate: server_enc.crt
         enc_private_key: server_enc.key
-      enable_client_auth: true # Optional, enable mTLS
+      client_auth_level: 1 # 0: not verify; 1: verify cert if has, not close; 2: mTLS
     server: http
 #LD_LIBRARY_PATH=/opt/tongsuo/lib64/ ./ffmpeg -tlcp 1 -sign_cert ../curl/client_sign.crt -sign_key ../curl/client_sign.key -enc_cert ../curl/client_enc.crt -enc_key ../curl/client_enc.key -i rtsps://172.31.247.9:10086/live/test -c:v copy -f null -
   - name: rtsps
