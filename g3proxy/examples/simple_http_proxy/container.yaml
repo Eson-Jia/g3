@@ -1,0 +1,49 @@
+runtime:
+  thread_number: 2
+
+log: stdout
+
+controller:
+  local:
+    recv_timeout: 30
+    send_timeout: 1
+
+server:
+  - name: rtsp
+    type: tcp_stream
+    escaper: default
+    upstream: localhost:332
+    tls_client:
+      insecure: true
+  - name: rtsps
+    type: native_tls_port
+    listen: "[::]:333"
+    tls_server:
+      cert_pairs:
+        certificate: certificate.crt
+        private_key: private.key
+      tlcp_cert_pairs:
+        sign_certificate: server_sign.crt
+        sign_private_key: server_sign.key
+        enc_certificate: server_enc.crt
+        enc_private_key: server_enc.key
+      client_auth_level: 1 # Optional, enable mTLS
+    server: rtsp
+
+resolver:
+  - name: default
+    type: c-ares
+    server: 127.0.0.1
+
+escaper:
+  - name: default
+    type: direct_fixed
+    no_ipv6: true
+    resolver: default
+    resolve_strategy: IPv4Only
+    tcp_sock_speed_limit: 80M
+    udp_sock_speed_limit: 10M
+    egress_network_filter:
+      default: allow
+      allow:
+        - 127.0.0.1

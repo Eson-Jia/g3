@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y curl vim lsof tcpdump && rm -rf /var/li
 COPY g3proxy/examples/simple_http_proxy/certificate.crt /usr/bin/certificate.crt
 COPY g3proxy/examples/simple_http_proxy/private.key /usr/bin/private.key
 COPY g3proxy/examples/simple_http_proxy/ntls.yaml /usr/bin/ntls.yaml
+COPY g3proxy/examples/simple_http_proxy/container.yaml /usr/bin/container.yaml
 COPY --from=builder /usr/src/g3/target/release-lto/g3proxy /usr/bin/g3proxy
 
 COPY g3proxy/examples/simple_http_proxy/entrypoint.sh /usr/bin/entrypoint.sh
