@@ -1,0 +1,6 @@
+*.yaml    text eol=lf
+*.sh     text eol=lf
+*.bash     text eol=lf
+*.Dockerfile text eol=lf
+*.key text eol=lf
+*.crt text eol=lf
