@@ -16,7 +16,7 @@ server:
     upstream: 10.10.30.188:332
     tls_client:
       insecure: true # Tls Insecure Mode: Tls Peer (server) cert vertification is no longer enforced for this Context!
-    listen: "[::]:10332"
+#    listen: "[::]:10332"
   - name: http
     type: http_rproxy
     escaper: default
@@ -54,7 +54,7 @@ server:
         sign_private_key: server_sign.key
         enc_certificate: server_enc.crt
         enc_private_key: server_enc.key
-      enable_client_auth: true # Optional, enable mTLS
+      client_auth_level: 1 # Optional, enable mTLS
     server: rtsp
 resolver:
   - name: default
