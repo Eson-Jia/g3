@@ -7,7 +7,7 @@ RUN cargo build --profile release-lto \
  -p g3proxy
 
 FROM debian:bookworm-slim
-RUN apt-get update && apt-get install -y curl vim lsof tcpdump && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl vim lsof tcpdump procps && rm -rf /var/lib/apt/lists/*
 
 COPY g3proxy/examples/simple_http_proxy/certificate.crt /usr/bin/certificate.crt
 COPY g3proxy/examples/simple_http_proxy/private.key /usr/bin/private.key
