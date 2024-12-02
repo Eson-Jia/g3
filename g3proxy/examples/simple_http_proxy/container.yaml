@@ -12,7 +12,7 @@ server:
   - name: rtsp
     type: tcp_stream
     escaper: default
-    upstream: localhost:332
+    upstream: 127.0.0.1:332
     tls_client:
       insecure: true
   - name: rtsps
