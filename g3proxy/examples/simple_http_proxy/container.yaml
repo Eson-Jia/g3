@@ -41,8 +41,6 @@ escaper:
     no_ipv6: true
     resolver: default
     resolve_strategy: IPv4Only
-    tcp_sock_speed_limit: 80M
-    udp_sock_speed_limit: 10M
     egress_network_filter:
       default: allow
       allow:
