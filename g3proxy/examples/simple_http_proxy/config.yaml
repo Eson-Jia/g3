@@ -1,0 +1,41 @@
+runtime:
+  thread_number: 2
+
+log: stdout
+
+controller:
+  local:
+    recv_timeout: 30
+    send_timeout: 1
+
+server:
+  - name: rtmp
+    type: tcp_stream
+    escaper: default
+    upstream: 127.0.0.1:1934
+#    tls_client: # Uncomment the following line if you want to enable TLS client
+#      insecure: true
+  - name: rtmps
+    type: native_tls_port
+    listen: "[::]:1935"
+    tls_server:
+      cert_pairs:
+        certificate: certificate.crt
+        private_key: private.key
+    server: rtmp
+
+resolver:
+  - name: default
+    type: c-ares
+    server: 127.0.0.1
+
+escaper:
+  - name: default
+    type: direct_fixed
+    no_ipv6: true
+    resolver: default
+    resolve_strategy: IPv4Only
+    egress_network_filter:
+      default: allow
+      allow:
+        - 127.0.0.1
