@@ -13,14 +13,14 @@ server:
     type: tcp_stream
     escaper: default
     upstream: 127.0.0.1:1934
-#    tls_client: # Uncomment the following line if you want to enable TLS client
-#      insecure: true
+#    tls_client: 控制是否启用TLS客户端
+#      insecure: true 控制是否忽略TLS证书验证
   - name: rtmps
     type: native_tls_port
     listen: "[::]:1935"
     tls_server:
       cert_pairs:
-        certificate: certificate.crt
+        certificate: certificate.crt # 如果在容器中运行，可能需要使用绝对路径，如 /usr/bin/certificate.crt
         private_key: private.key
     server: rtmp
 
